@@ -1,8 +1,5 @@
-Xtended-XML
-=====
-
-[![Build Status](https://travis-ci.org/elbywan/xtended-xml.svg?branch=master)](https://travis-ci.org/elbywan/xtended-xml)
------
+| Xtended-XML | [![Build Status](https://travis-ci.org/elbywan/xtended-xml.svg?branch=master)](https://travis-ci.org/elbywan/xtended-xml)
+===============
 
 ##Xtended-xml ?
 
@@ -26,4 +23,6 @@ To play around with the library, type `sbt console`.
 
 ##Usage
 
->todo
+>todo : detailed usage
+
+In the meantime, you can check the tests folder for some code samples.

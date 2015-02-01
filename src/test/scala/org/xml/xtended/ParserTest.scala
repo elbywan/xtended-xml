@@ -5,6 +5,7 @@ import org.xml.xtended.core.XtendedXmlParser
 import org.xml.xtended.core.XtendedXmlParser._
 
 import scala.io.Source
+import scala.xml.XML
 import scala.xml.pull._
 
 class ParserTest extends FlatSpec with Matchers {
@@ -15,8 +16,7 @@ class ParserTest extends FlatSpec with Matchers {
     def goToNextBook() = parser.goToByName[EvElemStart](new TagOpened("book"))
     def getBookId(eltOpt : Option[EvElemStart]) = eltOpt.get.attrs.asAttrMap.get("id").get
 
-
-    "An Xtended parser" should "find the book pointed by the id bk102" in {
+    "An Xtended parser" should "find a tag given its label" in {
         def findingLoop(eltOpt: Option[EvElemStart], accu: Int): Unit = {
             if (accu == 0) {
                 eltOpt.isDefined shouldBe true
@@ -30,7 +30,7 @@ class ParserTest extends FlatSpec with Matchers {
         findingLoop(goToNextBook(), 0)
     }
 
-    it should "parse the book details" in {
+    it should "parse tag contents" in {
         val book : EvElemStart = parser.element_read.asInstanceOf[EvElemStart]
         getBookId(Some(book)) should equal ("bk102")
 
@@ -42,6 +42,13 @@ class ParserTest extends FlatSpec with Matchers {
         parser.readNextTag("description").get should equal ("""<description>A former architect battles corporate zombies,
                                                           |            an evil sorceress, and her own childhood to become queen
                                                           |            of the world.</description>""".stripMargin)
+    }
+
+    it should "produce an accurate string representation of a tag and its contents" in {
+        parser.goToByName[EvElemStart](new TagOpened("book"))
+        val xml = XML.loadString(parser.getTagContents().get)
+        xml \@ "id" should equal ("bk103")
+        (xml \ "author").text should equal ("Corets, Eva")
     }
 
 

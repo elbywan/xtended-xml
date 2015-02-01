@@ -6,7 +6,7 @@ import scala.xml.EntityRef
 import scala.xml.pull._
 
 /**
- * XMLExtendedEventReader is an XML StAX parser extending the official Scala parser.
+ * XMLExtendedEventReader is an event based XML parser extending the official Scala parser.
  */
 object XtendedXmlParser {
 
@@ -191,7 +191,6 @@ class XtendedXmlParser(src: Source) extends XMLEventReader(src) {
                 loop_action  : XMLEvent => _ )  : Option[T] = {
 
         def inner_loop(thrown : XMLEvent) : Option[T] = {
-            println(thrown)
             if(comparison(event, thrown))
                 found_action(Some(thrown))
             else {
@@ -226,20 +225,21 @@ class XtendedXmlParser(src: Source) extends XMLEventReader(src) {
     }
 
     /**
-     * Reads and returns the contents of the next tag specified by the tagStart parameter as a String object.
+     * Reads and returns the contents of the current tag, if the last event read by the parser was the opening of a tag.
      *
-     * @param tagStart Xml event object containing the tag details
-     * @return The tag contents (from the opening to the closing of the tag) or an empty string if the tag was not found.
+     * @return The tag contents (from the opening to the closing of the tag) or None if the tag was not found.
      */
-    def getTagContents(tagStart : EvElemStart) : String = {
+    def getTagContents() : Option[String] = {
+        if(!element_read.isInstanceOf[EvElemStart])
+            None
+        val startingTag = element_read.asInstanceOf[EvElemStart]
         val builder : StringBuilder = new StringBuilder(xmlToString(element_read))
-        builder append goTo[String](
-            new TagClosed(tagStart.label),
+        goTo[String](
+            new TagClosed(startingTag.label),
             nameComparison,
             toStringFoundAction,
             (x : XMLEvent) => builder append xmlToString(x)
-        ).getOrElse("")
-        builder toString()
+        ).map{ endingString => builder append endingString; builder.toString()}
     }
 
     /**
@@ -250,7 +250,7 @@ class XtendedXmlParser(src: Source) extends XMLEventReader(src) {
      */
     def readNextTag(tagName : String) : Option[String] = {
         val tag = new TagOpened(tagName)
-        goToByName[EvElemStart](tag).map{ tag => getTagContents(tag)}
+        goToByName[EvElemStart](tag).flatMap{ tag => getTagContents() }
     }
 
 }
