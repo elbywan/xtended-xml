@@ -5,3 +5,9 @@ branches:
     only:
       - master
       - dev
+
+before_install:
+    - openssl aes-256-cbc -K $encrypted_e7f91199d35e_key -iv $encrypted_e7f91199d35e_iv -in sonatype.sbt.enc -out ~/.sbt/0.13/sonatype.sbt -d
+
+after_success:
+    - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && test $TRAVIS_SCALA_VERSION == "2.11.5" && sbt +publish
