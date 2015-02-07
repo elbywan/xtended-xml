@@ -7,17 +7,13 @@
 
 ##Installation
 
-###From this repo
+Add the following lines to your sbt build file :
 
-`
-    git clone https://github.com/elbywan/xtended-xml;
-    cd  xtended-xml;
-    sbt publishLocal;
-`
+```
+resolvers += Resolver.sonatypeRepo("snapshots")
 
-Then add the sbt build file :
-
-`libraryDependencies += "org.xml.xtended" %% "xtended-xml" % "0.1-SNAPSHOT"`
+libraryDependencies += "com.github.elbywan" %% "xtended-xml" % "0.1-SNAPSHOT"
+```
 
 To play around with the library, type `sbt console`.
 
@@ -26,3 +22,25 @@ To play around with the library, type `sbt console`.
 >todo : detailed usage
 
 In the meantime, you can check the tests folder for some code samples.
+
+###Imports
+
+```
+import org.xml.xtended.core.XtendedXmlParser
+import org.xml.xtended.core.XtendedXmlParser._
+```
+
+###Initializing the parser
+
+```
+//Where xml is a Source object
+val parser = new XtendedXmlParser(xml)
+```
+
+###Actions
+
+
+###Pulled events list
+
+
+###Content retrieval
