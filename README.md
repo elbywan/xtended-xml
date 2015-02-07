@@ -1,4 +1,4 @@
-| Xtended-XML | [![Build Status](https://travis-ci.org/elbywan/xtended-xml.svg?branch=master)](https://travis-ci.org/elbywan/xtended-xml)
+| Xtended-XML | [![Build Status](https://travis-ci.org/elbywan/xtended-xml.svg?branch=master)](https://travis-ci.org/elbywan/xtended-xml) | [![Coverage Status](https://coveralls.io/repos/elbywan/xtended-xml/badge.svg)](https://coveralls.io/r/elbywan/xtended-xml)
 ===============
 
 ##Xtended-xml ?

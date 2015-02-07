@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
 
 pomIncludeRepository := { _ => false }
 pomExtra :=
-    <url>https://github.com/elbywan/Neold</url>
+    <url>https://github.com/elbywan/xtended-xml</url>
         <licenses>
             <license>
                 <name>GNU Gpl v3</name>
@@ -22,7 +22,7 @@ pomExtra :=
         </licenses>
         <scm>
             <url>git@github.com:elbywan/neold.git</url>
-            <connection>scm:git:git@github.com:elbywan/neold.git</connection>
+            <connection>scm:git:git@github.com:elbywan/xtended-xml.git</connection>
         </scm>
         <developers>
             <developer>

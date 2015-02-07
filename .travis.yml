@@ -6,8 +6,15 @@ branches:
       - master
       - dev
 
+secure:
+    - secure: "Dm+8Vv2gDcuYflk4Lf79KtrxCB6DwZjFF5MvXuOyT5869BbM0nawrUrKx2nFT2NBxucAODdC6nXNFsQKKB9FBL+nEuODI7xtU1/BvJ5Wl5uJuAWpHdjIEvJB8D71IOhKlegd9LmdEUj1OSUOal2sjRkJIzAcCo59Nyt59Rewyo0="
+
 before_install:
     - openssl aes-256-cbc -K $encrypted_e7f91199d35e_key -iv $encrypted_e7f91199d35e_iv -in sonatype.sbt.enc -out ~/.sbt/0.13/sonatype.sbt -d
 
+script:
+    - sbt ++$TRAVIS_SCALA_VERSION clean coverage test
+
 after_success:
+    - sbt ++$TRAVIS_SCALA_VERSION coveralls
     - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && test $TRAVIS_SCALA_VERSION == "2.11.5" && sbt +publish
