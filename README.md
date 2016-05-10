@@ -3,7 +3,7 @@
 
 ##Xtended-xml ?
 
-**Xtended-xml** is an xml pull parser build on top of the official scala-xml library.
+**Xtended-xml** is an xml pull parser built on top of the official scala-xml library.
 
 ##Installation
 
